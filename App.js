@@ -8,6 +8,7 @@ import * as Font from 'expo-font';
 import Movies from "./src/pages/movie";
 import Trailers from "./src/pages/trailer";
 import PlayMovie from "./src/pages/play-movie";
+import GenreMovies from "./src/pages/movie-genre";
 import MovieDetails from "./src/pages/movie-details";
 
 const Stack = createStackNavigator();
@@ -40,6 +41,7 @@ export default class AppContainer extends React.Component {
 					<Stack.Navigator>
 						<Stack.Screen name="Movies" component={Movies} options={{headerShown: false}}/>
 						<Stack.Screen name="Details" component={MovieDetails} options={{headerShown: false}}/>
+						<Stack.Screen name="List" component={GenreMovies} options={{headerShown: false}}/>
 						<Stack.Screen name="Trailer" component={Trailers} options={{headerShown: false}}/>
 						<Stack.Screen name="Movie" component={PlayMovie} options={{headerShown: false}}/>
 					</Stack.Navigator>

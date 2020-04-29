@@ -150,7 +150,7 @@ class Movies extends Component{
 									<View style={[style.flexboxContainer, {paddingRight: 15}]}>
 									{
 										config.GENRE.map((el, index) => (
-											<TouchableOpacity style={[style.flexbox, style.relative, movie.movie, {width: 'auto'}]} key={index}>
+											<TouchableOpacity style={[style.flexbox, style.relative, movie.movie, {width: 'auto'}]} key={index} onPress={() => {this.props.navigation.navigate('List', {genre: el.slug, name: el.name})}}>
 												<Image source={{uri: `${config.GENRE_IMAGE_URL}${el.shortName}.jpg`}} style={[movie.genreImage]} resizeMode="cover"/>
 												<LinearGradient colors={['rgba(0,0,0,0.1)', 'rgba(0,0,0,0.6)', '#000']} angle={180} style={[style.flexboxContainer, style.fullHeight, movie.shadow]}>
 													<View style={{justifyContent: "flex-end"}}>
@@ -196,7 +196,7 @@ class Movies extends Component{
 										<View style={style.flexbox}>
 											<Text style={movie.heading}>Action movies</Text>
 										</View>
-										<TouchableOpacity style={[style.flexbox, style.relative]}>
+										<TouchableOpacity style={[style.flexbox, style.relative]} onPress={() => {this.props.navigation.navigate('List', {genre: 'action', name: 'Action'})}}>
 											<Text style={[style.textRight, movie.seeAll]}>See All</Text>
 											<View style={[style.border, movie.seeAllArrow]}></View>
 										</TouchableOpacity>
@@ -215,12 +215,12 @@ class Movies extends Component{
 								</View>
 
 								{/* Recent adventure movie listing */}
-								<View style={[style.flexbox, style.border, style.sectionBox]}>
+								<View style={[style.flexbox, style.border, style.sectionBox, {borderBottomWidth: 0}]}>
 									<View style={[style.flexboxContainer, style.verticalMiddle, movie.headingContainer]}>
 										<View style={style.flexbox}>
 											<Text style={movie.heading}>Adventure movies</Text>
 										</View>
-										<TouchableOpacity style={[style.flexbox, style.relative]}>
+										<TouchableOpacity style={[style.flexbox, style.relative]} onPress={() => {this.props.navigation.navigate('List', {genre: 'adventure', name: 'Adventure'})}}>
 											<Text style={[style.textRight, movie.seeAll]}>See All</Text>
 											<View style={[style.border, movie.seeAllArrow]}></View>
 										</TouchableOpacity>
