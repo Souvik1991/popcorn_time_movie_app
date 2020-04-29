@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-
-import TorrentStreamer from 'react-native-torrent-streamer'
+import { WebView } from 'react-native-webview';
 
 class PlayMovie extends Component{
     constructor(props){
@@ -50,17 +49,13 @@ class PlayMovie extends Component{
         // console.log(this.state.details);
         var hashId = this.findHashId(),
             magnetUrl = this.createMagnetUrl(hashId);
-        
-        TorrentStreamer.addEventListener('ready', this.onReady);
-        console.log(magnetUrl);
-        console.log(TorrentStreamer);
-        // TorrentStreamer.stop();
-        // TorrentStreamer.start(magnetUrl);
     }
 
     render(){
         return (
-            <></>
+            <>
+                <WebView source={{ uri: 'https://souvik1991.github.io/index.html' }}></WebView>
+            </>
         )
     }
 }

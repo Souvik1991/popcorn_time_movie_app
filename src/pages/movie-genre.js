@@ -22,7 +22,7 @@ class GenreMovies extends Component{
             page: 1,
             loading: false,
             hasMore: true,
-            width: (Dimensions.get('window').width/2) - 23,
+            width: ((Dimensions.get('window').width < Dimensions.get('window').height ? Dimensions.get('window').width : Dimensions.get('window').height)/2) - 23,
             sortBy: 'rating'
         };
         this.sortByChange = this.sortByChange.bind(this);
@@ -75,7 +75,7 @@ class GenreMovies extends Component{
                 <ScrollView scrollEventThrottle={10} onScroll={(e) => this.scroll(e)}>
                     <View style={[style.flexboxContainer, style.flexColumn]}>
                         {/* Popular movie listing */}
-                        <View style={[style.flexbox, style.border, style.sectionBox, {marginTop: 50, marginBottom: 20, paddingBottom: 25}]}>
+                        <View style={[style.flexbox, style.border, style.sectionBox, {marginTop: 40, marginBottom: 20, paddingBottom: 20}]}>
                             <View style={[style.flexboxContainer, style.verticalMiddle, movie.headingContainer, {paddingBottom: 0}]}>
                                 <View style={style.flexbox}>
                                     <Text style={movie.heading}>{this.state.name}</Text>
@@ -83,10 +83,10 @@ class GenreMovies extends Component{
                                 {this.state.order === undefined && 
                                     <View style={style.flexbox}>
                                         <Picker selectedValue={this.state.sortBy} onValueChange={this.sortByChange} mode="dropdown" textStyle={style.pickerText}>
-                                            <Picker.Item label="Title" value="title" />
-                                            <Picker.Item label="Year" value="year" />
                                             <Picker.Item label="Rating" value="rating" />
                                             <Picker.Item label="Like count" value="like_count" />
+                                            <Picker.Item label="Title" value="title" />
+                                            <Picker.Item label="Year" value="year" />
                                             <Picker.Item label="Date added" value="date_added" />
                                             <Picker.Item label="Peers" value="peers" />
                                             <Picker.Item label="Seeds" value="seeds" />
@@ -99,7 +99,7 @@ class GenreMovies extends Component{
                         <View style={[style.flexboxContainer, style.flexStart, style.flexWrap, {paddingLeft: 15, paddingRight: 15}]}>
                         {
                             this.state.movies.map((el, index) => (
-                                <TouchableOpacity style={[style.flexbox, {marginBottom: 15, marginRight: (index % 2 === 0 ? 15 : 0)}]} key={index} onPress={() => {this.props.navigation.navigate('Details', {data: el})}}>
+                                <TouchableOpacity style={[style.flexbox, style.half, {marginBottom: 15, paddingLeft: (index % 2 !== 0 ? 8 : 0)}]} key={index} onPress={() => {this.props.navigation.navigate('Details', {data: el})}}>
                                     <MovieList data={el} width={this.state.width}/>
                                 </TouchableOpacity>
                             ))
