@@ -77,6 +77,8 @@ export const movie = StyleSheet.create({
         paddingLeft: 15,
         paddingBottom: 10,
         fontSize: 16,
+        paddingRight: 0,
+        width: 200
         // position: "absolute",
         // bottom: 0,
         // left: 0,

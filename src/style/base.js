@@ -140,5 +140,16 @@ export const style = StyleSheet.create({
         borderLeftWidth: 0,
         borderBottomWidth: 0,
         transform: [{ rotate: '-135deg'}]
+    },
+    pickerText: {
+        fontSize: 17,
+        fontWeight: "600",
+        color: "#ffffff",
+        paddingTop: 15
+    },
+    loadingText: {
+        color: "#ffffff",
+        fontSize: 17,
+        fontWeight: "600"
     }
 })

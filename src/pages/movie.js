@@ -12,6 +12,7 @@ import { movie } from "../style/movie";
 import { movieDetails } from "../style/movie-details";
 
 import heart from "../assets/images/heart.png";
+import loading from "../assets/images/loading.gif";
 
 class Movies extends Component{
     constructor(props){
@@ -34,6 +35,7 @@ class Movies extends Component{
 		])
 		.then(axios.spread((popular, recent) => {
 			this.setState({
+				loaded: true,
 				action: popular.data.data.movies,
 				adventure: recent.data.data.movies
 			})
@@ -43,11 +45,7 @@ class Movies extends Component{
 	scroll(e){
 		let nevent = e.nativeEvent;
         if(nevent.contentSize.height < (nevent.contentOffset.y + nevent.layoutMeasurement.height + 250) && !this.state.notLoaded){
-			this.setState({
-				loaded: true
-			}, () => {
-				this.loadMoreSection();
-			})
+			this.loadMoreSection();
         }
 	}
 
@@ -65,15 +63,19 @@ class Movies extends Component{
 				init: true
 			})
 		}))
+		.catch((err) => {
+			console.log(err);
+		})
     }
 
     render() {
         return (
             <View style={style.main}>
 				<StatusBar backgroundColor="#ffffff" barStyle="light-content" />
-				{this.state.init && 
-					<View>
-
+				{!this.state.init && 
+					<View style={[style.flexboxContainer, style.centerAligned, style.fullHeight]}>
+						<Image source={loading} style={{width: 25, height: 25, marginRight: 10}}/>
+						<Text style={[style.textCenter, style.loadingText]}>Loading...</Text>
 					</View>
 				}
                 {this.state.init && 
@@ -117,7 +119,7 @@ class Movies extends Component{
 									<View style={style.flexbox}>
 										<Text style={movie.heading}>Popular</Text>
 									</View>
-									<TouchableOpacity style={[style.flexbox, style.relative]}>
+									<TouchableOpacity style={[style.flexbox, style.relative]} onPress={() => {this.props.navigation.navigate('List', {order: 'rating', name: 'Popular'})}}>
 										<Text style={[style.textRight, movie.seeAll]}>See All</Text>
 										<View style={[style.border, movie.seeAllArrow]}></View>
 									</TouchableOpacity>
@@ -141,10 +143,10 @@ class Movies extends Component{
 									<View style={style.flexbox}>
 										<Text style={movie.heading}>Movie genre</Text>
 									</View>
-									<TouchableOpacity style={[style.flexbox, style.relative]}>
+									{/* <TouchableOpacity style={[style.flexbox, style.relative]}>
 										<Text style={[style.textRight, movie.seeAll]}>See All</Text>
 										<View style={[style.border, movie.seeAllArrow]}></View>
-									</TouchableOpacity>
+									</TouchableOpacity> */}
 								</View>
 								<ScrollView horizontal={true} style={style.bothsideOverFlow}>
 									<View style={[style.flexboxContainer, {paddingRight: 15}]}>
@@ -153,8 +155,8 @@ class Movies extends Component{
 											<TouchableOpacity style={[style.flexbox, style.relative, movie.movie, {width: 'auto'}]} key={index} onPress={() => {this.props.navigation.navigate('List', {genre: el.slug, name: el.name})}}>
 												<Image source={{uri: `${config.GENRE_IMAGE_URL}${el.shortName}.jpg`}} style={[movie.genreImage]} resizeMode="cover"/>
 												<LinearGradient colors={['rgba(0,0,0,0.1)', 'rgba(0,0,0,0.6)', '#000']} angle={180} style={[style.flexboxContainer, style.fullHeight, movie.shadow]}>
-													<View style={{justifyContent: "flex-end"}}>
-														<Text style={[movie.title, movie.genreTitle]}>{ el.name }</Text>
+													<View style={[style.flexbox, {justifyContent: "flex-end"}]}>
+														<Text style={[movie.title, movie.genreTitle]} numberOfLines={1} >{ el.name }</Text>
 													</View>
 												</LinearGradient>
 											</TouchableOpacity>
@@ -170,7 +172,7 @@ class Movies extends Component{
 									<View style={style.flexbox}>
 										<Text style={movie.heading}>Recently released</Text>
 									</View>
-									<TouchableOpacity style={[style.flexbox, style.relative]}>
+									<TouchableOpacity style={[style.flexbox, style.relative]} onPress={() => {this.props.navigation.navigate('List', {order: 'year', name: 'Recently released'})}}>
 										<Text style={[style.textRight, movie.seeAll]}>See All</Text>
 										<View style={[style.border, movie.seeAllArrow]}></View>
 									</TouchableOpacity>
@@ -188,8 +190,8 @@ class Movies extends Component{
 								</ScrollView>
 							</View>
 							
-							{this.state.loaded && this.state.adventure.length > 0 && 
-							<View>
+							{this.state.loaded && 
+							<View style={{marginBottom: 50}}>
 								{/* Recent action movie listing */}
 								<View style={[style.flexbox, style.border, style.sectionBox]}>
 									<View style={[style.flexboxContainer, style.verticalMiddle, movie.headingContainer]}>
@@ -238,6 +240,12 @@ class Movies extends Component{
 									</ScrollView>
 								</View>
 							</View>
+							}
+							{!this.state.loaded &&
+								<View style={[style.flexboxContainer, style.centerAligned, {marginTop: 20, marginBottom: 50}]}>
+									<Image source={loading} style={{width: 25, height: 25, marginRight: 10}}/>
+									<Text style={[style.textCenter, style.loadingText]}>Loading...</Text>
+								</View>
 							}
 						</View>
 					</ScrollView>
