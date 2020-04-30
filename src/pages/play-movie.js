@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import { View } from 'react-native';
 import { WebView } from 'react-native-webview';
+
+import { style } from "../style/base";
 
 class PlayMovie extends Component{
     constructor(props){
@@ -7,9 +10,8 @@ class PlayMovie extends Component{
         this.state = {
             details: this.props.route.params.data,
             poster: this.props.route.params.data.background_image_original || this.props.route.params.data.background_image,
-            loaded: false
+            hashId: undefined
         };
-        this.onReady = this.onReady.bind(this);
     }
 
     findHashId(){
@@ -26,36 +28,18 @@ class PlayMovie extends Component{
         return webURL || otherURL;
     }
 
-    createMagnetUrl(btih){
-        var trackers = [
-            'udp://glotorrents.pw:6969/announce',
-            'udp://tracker.opentrackr.org:1337/announce',
-            'udp://torrent.gresille.org:80/announce',
-            'udp://tracker.openbittorrent.com:80',
-            'udp://tracker.coppersurfer.tk:6969',
-            'udp://tracker.leechers-paradise.org:6969',
-            'udp://p4p.arenabg.ch:1337',
-            'udp://tracker.internetwarriors.net:1337',
-            'udp://open.demonii.com:1337/announce'
-        ];
-        return `magnet:?xt=urn:btih:${btih}&tr=${trackers.join('&tr=')}`
-    }
-
-    onReady(data){
-        console.log(data);
-    }
-
     componentDidMount(){
         // console.log(this.state.details);
-        var hashId = this.findHashId(),
-            magnetUrl = this.createMagnetUrl(hashId);
+        this.setState({
+            hashId: this.findHashId()
+        })
     }
 
     render(){
         return (
-            <>
-                <WebView source={{ uri: 'https://souvik1991.github.io/index.html' }}></WebView>
-            </>
+            <View style={style.main}>
+                {this.state.hashId && <WebView source={{ uri: `https://souvik1991.github.io/index.html?tid=${this.state.hashId}&poster=${this.state.poster}` }}></WebView>}
+            </View>
         )
     }
 }
