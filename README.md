@@ -3,6 +3,8 @@ This is a movie app, created using expo and React Native. It uses open API avail
 
 Watch movie online from torrent, without downloading it. Free movies, HD movies directly on your mobile device.
 
+It uses **[WebTorrent](https://webtorrent.io/)** - the first torrent client that works in the browser. **WebTorrent** uses **[WebRTC](https://webrtc.org/)** for true peer-to-peer transport. No browser plugin, extension, or installation is required.
+
 To run the app on your local system, follow the following steps:
 1. Do git clone or download the zip file.
 2. Unzip the project file and go to the folder.
