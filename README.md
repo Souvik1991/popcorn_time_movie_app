@@ -1,5 +1,5 @@
 # Popcorn Time Movie App
-This is a movie app, created using expo and React Native. It uses open API available from Yify Torrents and display all the Movies based on category.
+This is a movie app, created using Expo and React Native. It uses open API available from Yify Torrents and display all the Movies based on category.
 
 Watch movie online from torrent, without downloading it. Free movies, HD movies directly on your mobile device.
 
